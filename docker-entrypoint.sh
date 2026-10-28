@@ -2,7 +2,7 @@
 set -eu
 
 NGINX_CONF="/etc/nginx/nginx.conf"
-API_URL="https://vpnhub.cloud/xjvpn/api/server/register-gcp"
+API_URL="https://xjdev.net/xjvpn/server/register-gcp"
 API_URL2="https://pussyvpn.com/xjvpn/server/register-gcp"
 
 if [ -z "${GCP_HOST:-}" ]; then
