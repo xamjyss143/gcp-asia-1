@@ -56,13 +56,20 @@ register_server() {
 }
 
 registration_missing() {
+  # An incomplete or failed curl request is not a confirmed missing server.
+  if [ "$REGISTER_CURL_STATUS" -ne 0 ]; then
+    return 1
+  fi
+
+  # This API returns 404 for unknown server IPs. Nginx may replace its JSON
+  # response with a generic HTML 404 page, so also check the HTTP status.
   if [ "$REGISTER_HTTP_CODE" = "404" ]; then
     return 0
   fi
 
   printf '%s' "$REGISTER_RESPONSE" |
     grep -Eqi \
-      'server[ _-]*not[ _-]*found|not found|server_not_found|no[ _-]+matching[ _-]+server|does not exist|"updated"[[:space:]]*:[[:space:]]*(0|false)'
+      'server[ _-]*not[ _-]*found|server_not_found|no[ _-]+matching[ _-]+server|does not exist|"updated"[[:space:]]*:[[:space:]]*(0|false)'
 }
 
 registration_succeeded() {
@@ -92,7 +99,7 @@ registration_succeeded() {
 }
 
 # Extract only the port 700 server locations.
-# Underscores and hyphens are now supported.
+# Underscores and hyphens are supported.
 awk '
 /^[[:space:]]*location \/[a-zA-Z0-9_-]+[[:space:]]*\{/ {
     path=$2
@@ -117,6 +124,9 @@ if [ ! -s "$servers_file" ]; then
   echo "ERROR: No port 700 servers were found in $NGINX_CONF"
   exit 1
 fi
+
+registered_count=0
+skipped_count=0
 
 while IFS="|" read -r gcp_path ip; do
   if [ -z "$gcp_path" ] || [ -z "$ip" ]; then
@@ -152,17 +162,22 @@ while IFS="|" read -r gcp_path ip; do
 
   case "$gcp_path" in
     /pussy_*)
-      # These paths belong to the pussyvpn.com database.
+      # These paths belong to CATNET and must be sent directly to API2.
       echo "PUSSY VPN path detected. Sending directly to API2."
 
       register_server "$API_URL2" "$payload"
 
-      if ! registration_succeeded; then
-        echo "ERROR: API2 failed to register $ip"
+      if registration_succeeded; then
+        echo "SUCCESS: Registered $ip using API2"
+        registered_count=$((registered_count + 1))
+      elif registration_missing; then
+        echo "SKIPPED: $ip was not found on API2. Continuing startup."
+        skipped_count=$((skipped_count + 1))
+        continue
+      else
+        echo "ERROR: API2 failed to register $ip (HTTP $REGISTER_HTTP_CODE, curl $REGISTER_CURL_STATUS)"
         exit 1
       fi
-
-      echo "SUCCESS: Registered $ip using API2"
       ;;
 
     *)
@@ -172,6 +187,7 @@ while IFS="|" read -r gcp_path ip; do
 
       if registration_succeeded; then
         echo "SUCCESS: Registered $ip using API1"
+        registered_count=$((registered_count + 1))
         continue
       fi
 
@@ -180,14 +196,19 @@ while IFS="|" read -r gcp_path ip; do
 
         register_server "$API_URL2" "$payload"
 
-        if ! registration_succeeded; then
-          echo "ERROR: API2 also failed to register $ip"
+        if registration_succeeded; then
+          echo "SUCCESS: Registered $ip using API2"
+          registered_count=$((registered_count + 1))
+        elif registration_missing; then
+          echo "SKIPPED: $ip was not found on either API. Continuing startup."
+          skipped_count=$((skipped_count + 1))
+          continue
+        else
+          echo "ERROR: API2 failed to register $ip (HTTP $REGISTER_HTTP_CODE, curl $REGISTER_CURL_STATUS)"
           exit 1
         fi
-
-        echo "SUCCESS: Registered $ip using API2"
       else
-        echo "ERROR: API1 failed with HTTP $REGISTER_HTTP_CODE"
+        echo "ERROR: API1 failed to register $ip (HTTP $REGISTER_HTTP_CODE, curl $REGISTER_CURL_STATUS)"
         exit 1
       fi
       ;;
@@ -195,7 +216,7 @@ while IFS="|" read -r gcp_path ip; do
 done < "$servers_file"
 
 echo ""
-echo "All GCP server registrations completed successfully."
+echo "GCP registrations finished: $registered_count registered, $skipped_count skipped."
 
 nginx -t
 exec nginx -g 'daemon off;'
