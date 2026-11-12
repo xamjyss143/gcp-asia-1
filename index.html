@@ -1,165 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XJ DEVELOPER</title>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, sans-serif;
-        }
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      min-height: 100vh;
+      overflow: hidden;
+      padding: clamp(110px, 12vh, 150px) clamp(28px, 5vw, 84px) clamp(72px, 9vh, 110px);
+      padding: clamp(110px, 12vh, 150px) clamp(24px, 3.2vw, 58px) clamp(72px, 9vh, 110px);
+    }
+    .panel {
+      border-left: 1px solid rgba(255, 255, 255, .09);
+      background:
+        radial-gradient(circle at 22% 26%, rgba(168, 85, 247, .34), transparent 34%),
+        linear-gradient(145deg, #25114f 0%, #121329 52%, #090d18 100%);
+        radial-gradient(circle at 78% 28%, rgba(45, 212, 191, .32), transparent 34%),
+        linear-gradient(215deg, #064e4b 0%, #102a31 50%, #090d18 100%);
+    }
+    .vpn {
+      background:
+        radial-gradient(circle at 22% 26%, rgba(244, 114, 182, .38), transparent 34%),
+        linear-gradient(145deg, #5b123f 0%, #28132c 52%, #090d18 100%);
+    }
 
-        body{
-            background:#0f172a;
-            color:white;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            min-height:100vh;
-            padding:20px;
-        }
+    .catnet {
+      border-left: 1px solid rgba(255, 255, 255, .09);
+      background:
+        radial-gradient(circle at 78% 28%, rgba(34, 211, 238, .27), transparent 34%),
+        linear-gradient(215deg, #063c48 0%, #101b2b 50%, #090d18 100%);
+        radial-gradient(circle at 78% 26%, rgba(249, 115, 22, .44), transparent 34%),
+        linear-gradient(215deg, #6b2108 0%, #35180e 50%, #090d18 100%);
+    }
 
-        .container{
-            width:100%;
-            max-width:900px;
-            background:#111827;
-            border-radius:20px;
-            padding:50px;
-            box-shadow:0 0 40px rgba(0,0,0,0.4);
-        }
+    .content {
+      margin-bottom: 24px;
+      font-size: clamp(54px, 7vw, 112px);
+      font-size: clamp(48px, 5.2vw, 86px);
+      font-weight: 900;
 
-        .badge{
-            display:inline-block;
-            background:#7c3aed;
-            color:white;
-            padding:8px 16px;
-            border-radius:50px;
-            font-size:14px;
-            margin-bottom:20px;
-        }
+      .vpn {
+      .panel,
+      .catnet {
+        border-top: 1px solid rgba(255, 255, 255, .09);
+        bottom: auto;
+        top: calc(200svh - 34px);
+        top: calc(300svh - 34px);
+      }
+  <main>
+    <section class="product panel" aria-labelledby="panel-title">
+    <section class="product vpn" aria-labelledby="vpn-title">
+      <div class="content">
+        <p class="eyebrow">Management platform</p>
+        <h1 id="panel-title">XJ<br>PANEL</h1>
+        <p class="eyebrow">Private connection</p>
+        <h1 id="vpn-title">XJ<br>VPN</h1>
+        <p class="description">
+          A secure VPN management platform for server monitoring, account generation,
+          and a fast, modern mobile workflow.
+          Fast, secure VPN access with support for SSH, OpenVPN, DNSTT, XRAY,
+          Hysteria, and premium servers.
+        </p>
+        <ul class="features" aria-label="XJ PANEL features">
+          <li>Server monitoring</li>
+          <li>Account generation</li>
+          <li>Secure access</li>
+        <ul class="features" aria-label="XJ VPN features">
+          <li>Multiple protocols</li>
+          <li>Premium servers</li>
+          <li>Private browsing</li>
+        </ul>
+        <a class="download" href="https://play.google.com/store/apps/details?id=com.xj.panel" target="_blank" rel="noopener noreferrer" aria-label="View XJ PANEL on Google Play">
+        <a class="download" href="https://play.google.com/store/apps/details?id=net.xj.vpn" target="_blank" rel="noopener noreferrer" aria-label="Download XJ VPN from Google Play">
+          <svg class="play-icon" viewBox="0 0 28 31" aria-hidden="true">
 
-        h1{
-            font-size:48px;
-            margin-bottom:15px;
-        }
+    <section class="product vpn" aria-labelledby="vpn-title">
+    <section class="product panel" aria-labelledby="panel-title">
+      <div class="content">
+        <p class="eyebrow">Private connection</p>
+        <h1 id="vpn-title">XJ<br>VPN</h1>
+        <p class="eyebrow">Management platform</p>
+        <h1 id="panel-title">XJ<br>PANEL</h1>
+        <p class="description">
+          Fast, secure VPN access with support for SSH, OpenVPN, DNSTT, XRAY,
+          Hysteria, and premium servers.
+          A secure VPN management platform for server monitoring, account generation,
+          and a fast, modern mobile workflow.
+        </p>
+        <ul class="features" aria-label="XJ VPN features">
+          <li>Multiple protocols</li>
+          <li>Premium servers</li>
+          <li>Private browsing</li>
+        <ul class="features" aria-label="XJ PANEL features">
+          <li>Server monitoring</li>
+          <li>Account generation</li>
+          <li>Secure access</li>
+        </ul>
+        <a class="download" href="https://play.google.com/store/apps/details?id=net.xj.vpn" target="_blank" rel="noopener noreferrer" aria-label="Download XJ VPN from Google Play">
+        <a class="download" href="https://play.google.com/store/apps/details?id=com.xj.panel" target="_blank" rel="noopener noreferrer" aria-label="View XJ PANEL on Google Play">
+          <svg class="play-icon" viewBox="0 0 28 31" aria-hidden="true">
+    </section>
 
-        p{
-            color:#cbd5e1;
-            line-height:1.7;
-            margin-bottom:20px;
-            font-size:18px;
-        }
-
-        .apps{
-            margin-top:40px;
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-            gap:20px;
-        }
-
-        .card{
-            background:#1e293b;
-            border-radius:16px;
-            padding:25px;
-            border:1px solid rgba(255,255,255,0.05);
-        }
-
-        .card h2{
-            margin-bottom:10px;
-            font-size:24px;
-        }
-
-        .card p{
-            font-size:15px;
-            margin-bottom:15px;
-        }
-
-        .btn{
-            display:inline-block;
-            padding:12px 18px;
-            background:#7c3aed;
-            color:white;
-            text-decoration:none;
-            border-radius:10px;
-            transition:0.3s;
-        }
-
-        .btn:hover{
-            background:#6d28d9;
-        }
-
-        footer{
-            margin-top:50px;
-            color:#94a3b8;
-            font-size:14px;
-            text-align:center;
-        }
-
-        @media(max-width:768px){
-            h1{
-                font-size:36px;
-            }
-
-            .container{
-                padding:30px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-
-    <div class="badge">
-        Official Developer Website
-    </div>
-
-    <h1>XJ DEVELOPER</h1>
-
-    <p>
-        Welcome to the official developer website for XJ PANEL applications and services.
-        This website provides application information, support resources, and official download links.
-    </p>
-
-    <div class="apps">
-
-        <div class="card">
-            <h2>XJ PANEL</h2>
-
-            <p>
-                Secure VPN management platform with server monitoring,
-                account generation, and modern mobile experience.
-            </p>
-
-            <a href="https://play.google.com/store/apps/details?id=com.xj.panel" class="btn" target="_blank">
-                View on Google Play
-            </a>
-        </div>
-
-        <div class="card">
-            <h2>XJ VPN</h2>
-
-            <p>
-                Fast and secure VPN application with SSH, OpenVPN, DNSTT,
-                XRAY, Hysteria, and premium server access.
-            </p>
-
-            <a href="https://play.google.com/store/apps/details?id=net.xj.vpn" class="btn" target="_blank">
-                Download XJ VPN
-            </a>
-        </div>
-
-    </div>
-
-    <footer>
-        © 2026 XJ DEVELOPER. All rights reserved.
-    </footer>
-
-</div>
-
-</body>
-</html>
+    <section class="product catnet" aria-labelledby="catnet-title">
+      <div class="content">
+        <p class="eyebrow">Secure mobile VPN</p>
+        <h1 id="catnet-title">CATNET<br>VPN</h1>
+        <p class="description">
+          A secure and reliable mobile VPN experience designed for simple,
+          private, and convenient everyday connections.
+        </p>
+        <ul class="features" aria-label="CATNET VPN features">
+          <li>Secure connection</li>
+          <li>Easy to use</li>
+          <li>Mobile access</li>
+        </ul>
+        <a class="download" href="https://play.google.com/store/apps/details?id=net.catnet.vpn" target="_blank" rel="noopener noreferrer" aria-label="Download CATNET VPN from Google Play">
+          <svg class="play-icon" viewBox="0 0 28 31" aria-hidden="true">
+            <path fill="#00d6ff" d="M1.4 1.8A3.2 3.2 0 0 0 .5 4v23a3 3 0 0 0 .9 2.2l.2.2 13-13.7v-.3L1.6 1.7l-.2.1Z"/>
+            <path fill="#ffdc00" d="m18.9 20.2-4.3-4.5v-.3l4.3-4.5.1.1 5.1 2.9c1.5.8 1.5 2.2 0 3L19 20.1l-.1.1Z"/>
+            <path fill="#ff3a44" d="m19 20.1-4.4-4.6-13 13.8c.5.5 1.4.6 2.4.1L19 20.1Z"/>
+            <path fill="#00ef79" d="M19 10.9 4 1.5C3 .9 2.1 1.1 1.6 1.7l13 13.8 4.4-4.6Z"/>
+          </svg>
+          <span class="download-text">
+            <small>Get it on</small>
+            <strong>Google Play</strong>
+          </span>
+        </a>
+      </div>
+      <span class="number" aria-hidden="true">03</span>
+    </section>
+  </main>
