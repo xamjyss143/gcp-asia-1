@@ -1,20 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b14">
+  <meta name="description" content="Official website for XJ PANEL and XJ VPN applications.">
+  <title>XJ Developer</title>
 
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080b14;
+      --text: #f8fafc;
+      --muted: #aeb8cc;
+      --panel: #7c3aed;
+      --vpn: #0891b2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .site-header {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px clamp(22px, 4vw, 64px);
+      pointer-events: none;
+    }
+
+    .brand,
+    .official {
+      pointer-events: auto;
+    }
+
+    .brand {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .official {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 999px;
+      background: rgba(8, 11, 20, .26);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .12);
+      font-size: 12px;
+      font-weight: 700;
+      backdrop-filter: blur(14px);
+    }
+
+    .official::before {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 14px #4ade80;
+      content: "";
+    }
+
+    main {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       grid-template-columns: repeat(3, minmax(0, 1fr));
       min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .product {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      align-items: flex-end;
+      min-height: 100vh;
+      min-height: 100dvh;
       overflow: hidden;
-      padding: clamp(110px, 12vh, 150px) clamp(28px, 5vw, 84px) clamp(72px, 9vh, 110px);
       padding: clamp(110px, 12vh, 150px) clamp(24px, 3.2vw, 58px) clamp(72px, 9vh, 110px);
     }
+
+    .product::before,
+    .product::after {
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      content: "";
+      filter: blur(2px);
+    }
+
+    .product::before {
+      top: -16vw;
+      right: -15vw;
+      width: 42vw;
+      height: 42vw;
+      border: 1px solid rgba(255, 255, 255, .11);
+      box-shadow: inset 0 0 100px rgba(255, 255, 255, .035);
+    }
+
+    .product::after {
+      right: 8%;
+      bottom: 10%;
+      width: 180px;
+      height: 180px;
+      background: rgba(255, 255, 255, .05);
+      filter: blur(70px);
+    }
+
     .panel {
       border-left: 1px solid rgba(255, 255, 255, .09);
       background:
-        radial-gradient(circle at 22% 26%, rgba(168, 85, 247, .34), transparent 34%),
-        linear-gradient(145deg, #25114f 0%, #121329 52%, #090d18 100%);
         radial-gradient(circle at 78% 28%, rgba(45, 212, 191, .32), transparent 34%),
         linear-gradient(215deg, #064e4b 0%, #102a31 50%, #090d18 100%);
     }
+
     .vpn {
       background:
         radial-gradient(circle at 22% 26%, rgba(244, 114, 182, .38), transparent 34%),
@@ -24,78 +146,273 @@
     .catnet {
       border-left: 1px solid rgba(255, 255, 255, .09);
       background:
-        radial-gradient(circle at 78% 28%, rgba(34, 211, 238, .27), transparent 34%),
-        linear-gradient(215deg, #063c48 0%, #101b2b 50%, #090d18 100%);
         radial-gradient(circle at 78% 26%, rgba(249, 115, 22, .44), transparent 34%),
         linear-gradient(215deg, #6b2108 0%, #35180e 50%, #090d18 100%);
     }
 
     .content {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 540px);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: rgba(255, 255, 255, .7);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 2px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1 {
+      max-width: 650px;
       margin-bottom: 24px;
-      font-size: clamp(54px, 7vw, 112px);
       font-size: clamp(48px, 5.2vw, 86px);
       font-weight: 900;
+      letter-spacing: -.065em;
+      line-height: .84;
+    }
 
-      .vpn {
+    .description {
+      max-width: 490px;
+      margin-bottom: 34px;
+      color: var(--muted);
+      font-size: clamp(16px, 1.35vw, 19px);
+      line-height: 1.75;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 34px;
+      list-style: none;
+    }
+
+    .features li {
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .055);
+      color: #dce5f4;
+      font-size: 12px;
+      font-weight: 650;
+      backdrop-filter: blur(8px);
+    }
+
+    .download {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 56px;
+      padding: 0 21px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, .25);
+      color: #090d18;
+      text-decoration: none;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .download:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, .34);
+    }
+
+    .download:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, .75);
+      outline-offset: 5px;
+    }
+
+    .play-icon {
+      width: 25px;
+      height: 28px;
+      flex: 0 0 auto;
+    }
+
+    .download-text {
+      display: grid;
+      gap: 1px;
+    }
+
+    .download small {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    .download strong {
+      font-size: 17px;
+      line-height: 1.1;
+    }
+
+    .number {
+      position: absolute;
+      z-index: 0;
+      right: clamp(24px, 4vw, 64px);
+      bottom: clamp(26px, 5vh, 64px);
+      color: rgba(255, 255, 255, .045);
+      font-size: clamp(110px, 17vw, 270px);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      line-height: .7;
+      user-select: none;
+    }
+
+    .site-footer {
+      position: fixed;
+      z-index: 20;
+      bottom: 22px;
+      left: 50%;
+      color: rgba(255, 255, 255, .48);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 860px) {
+      .site-header {
+        padding: 20px 22px;
+      }
+
+      .official {
+        padding: 8px 10px;
+        font-size: 10px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .product {
+        min-height: 100svh;
+        padding: 120px 26px 76px;
+      }
+
       .panel,
       .catnet {
         border-top: 1px solid rgba(255, 255, 255, .09);
+        border-left: 0;
+      }
+
+      h1 {
+        font-size: clamp(56px, 18vw, 88px);
+      }
+
+      .site-footer {
+        position: absolute;
         bottom: auto;
-        top: calc(200svh - 34px);
         top: calc(300svh - 34px);
       }
-  <main>
-    <section class="product panel" aria-labelledby="panel-title">
-    <section class="product vpn" aria-labelledby="vpn-title">
-      <div class="content">
-        <p class="eyebrow">Management platform</p>
-        <h1 id="panel-title">XJ<br>PANEL</h1>
-        <p class="eyebrow">Private connection</p>
-        <h1 id="vpn-title">XJ<br>VPN</h1>
-        <p class="description">
-          A secure VPN management platform for server monitoring, account generation,
-          and a fast, modern mobile workflow.
-          Fast, secure VPN access with support for SSH, OpenVPN, DNSTT, XRAY,
-          Hysteria, and premium servers.
-        </p>
-        <ul class="features" aria-label="XJ PANEL features">
-          <li>Server monitoring</li>
-          <li>Account generation</li>
-          <li>Secure access</li>
-        <ul class="features" aria-label="XJ VPN features">
-          <li>Multiple protocols</li>
-          <li>Premium servers</li>
-          <li>Private browsing</li>
-        </ul>
-        <a class="download" href="https://play.google.com/store/apps/details?id=com.xj.panel" target="_blank" rel="noopener noreferrer" aria-label="View XJ PANEL on Google Play">
-        <a class="download" href="https://play.google.com/store/apps/details?id=net.xj.vpn" target="_blank" rel="noopener noreferrer" aria-label="Download XJ VPN from Google Play">
-          <svg class="play-icon" viewBox="0 0 28 31" aria-hidden="true">
+    }
 
+    @media (max-width: 420px) {
+      .official span {
+        display: none;
+      }
+
+      .official {
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .description {
+        font-size: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .download {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">XJ Developer</div>
+    <div class="official"><span>Official applications</span></div>
+  </header>
+
+  <main>
     <section class="product vpn" aria-labelledby="vpn-title">
-    <section class="product panel" aria-labelledby="panel-title">
       <div class="content">
         <p class="eyebrow">Private connection</p>
         <h1 id="vpn-title">XJ<br>VPN</h1>
-        <p class="eyebrow">Management platform</p>
-        <h1 id="panel-title">XJ<br>PANEL</h1>
         <p class="description">
           Fast, secure VPN access with support for SSH, OpenVPN, DNSTT, XRAY,
           Hysteria, and premium servers.
-          A secure VPN management platform for server monitoring, account generation,
-          and a fast, modern mobile workflow.
         </p>
         <ul class="features" aria-label="XJ VPN features">
           <li>Multiple protocols</li>
           <li>Premium servers</li>
           <li>Private browsing</li>
+        </ul>
+        <a class="download" href="https://play.google.com/store/apps/details?id=net.xj.vpn" target="_blank" rel="noopener noreferrer" aria-label="Download XJ VPN from Google Play">
+          <svg class="play-icon" viewBox="0 0 28 31" aria-hidden="true">
+            <path fill="#00d6ff" d="M1.4 1.8A3.2 3.2 0 0 0 .5 4v23a3 3 0 0 0 .9 2.2l.2.2 13-13.7v-.3L1.6 1.7l-.2.1Z"/>
+            <path fill="#ffdc00" d="m18.9 20.2-4.3-4.5v-.3l4.3-4.5.1.1 5.1 2.9c1.5.8 1.5 2.2 0 3L19 20.1l-.1.1Z"/>
+            <path fill="#ff3a44" d="m19 20.1-4.4-4.6-13 13.8c.5.5 1.4.6 2.4.1L19 20.1Z"/>
+            <path fill="#00ef79" d="M19 10.9 4 1.5C3 .9 2.1 1.1 1.6 1.7l13 13.8 4.4-4.6Z"/>
+          </svg>
+          <span class="download-text">
+            <small>Get it on</small>
+            <strong>Google Play</strong>
+          </span>
+        </a>
+      </div>
+      <span class="number" aria-hidden="true">01</span>
+    </section>
+
+    <section class="product panel" aria-labelledby="panel-title">
+      <div class="content">
+        <p class="eyebrow">Management platform</p>
+        <h1 id="panel-title">XJ<br>PANEL</h1>
+        <p class="description">
+          A secure VPN management platform for server monitoring, account generation,
+          and a fast, modern mobile workflow.
+        </p>
         <ul class="features" aria-label="XJ PANEL features">
           <li>Server monitoring</li>
           <li>Account generation</li>
           <li>Secure access</li>
         </ul>
-        <a class="download" href="https://play.google.com/store/apps/details?id=net.xj.vpn" target="_blank" rel="noopener noreferrer" aria-label="Download XJ VPN from Google Play">
         <a class="download" href="https://play.google.com/store/apps/details?id=com.xj.panel" target="_blank" rel="noopener noreferrer" aria-label="View XJ PANEL on Google Play">
           <svg class="play-icon" viewBox="0 0 28 31" aria-hidden="true">
+            <path fill="#00d6ff" d="M1.4 1.8A3.2 3.2 0 0 0 .5 4v23a3 3 0 0 0 .9 2.2l.2.2 13-13.7v-.3L1.6 1.7l-.2.1Z"/>
+            <path fill="#ffdc00" d="m18.9 20.2-4.3-4.5v-.3l4.3-4.5.1.1 5.1 2.9c1.5.8 1.5 2.2 0 3L19 20.1l-.1.1Z"/>
+            <path fill="#ff3a44" d="m19 20.1-4.4-4.6-13 13.8c.5.5 1.4.6 2.4.1L19 20.1Z"/>
+            <path fill="#00ef79" d="M19 10.9 4 1.5C3 .9 2.1 1.1 1.6 1.7l13 13.8 4.4-4.6Z"/>
+          </svg>
+          <span class="download-text">
+            <small>Get it on</small>
+            <strong>Google Play</strong>
+          </span>
+        </a>
+      </div>
+      <span class="number" aria-hidden="true">02</span>
     </section>
 
     <section class="product catnet" aria-labelledby="catnet-title">
@@ -127,3 +444,7 @@
       <span class="number" aria-hidden="true">03</span>
     </section>
   </main>
+
+  <footer class="site-footer">&copy; 2026 XJ Developer</footer>
+</body>
+</html>
