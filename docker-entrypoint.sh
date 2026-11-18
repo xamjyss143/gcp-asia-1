@@ -138,6 +138,7 @@ while IFS="|" read -r gcp_path ip; do
   gcp_xray_path="/vless_${code}"
   gcp_vmess_path="/vmess_${code}"
   gcp_trojan_path="/trojan-ws_${code}"
+  gcp_ss_path="/ss-ws_${code}"
 
   payload=$(printf '{
     "ip": "%s",
@@ -145,14 +146,16 @@ while IFS="|" read -r gcp_path ip; do
     "gcp_path": "%s",
     "gcp_xray_path": "%s",
     "gcp_vmess_path": "%s",
-    "gcp_trojan_path": "%s"
+    "gcp_trojan_path": "%s",
+    "gcp_ss_path": "%s"
   }' \
     "$ip" \
     "$GCP_HOST" \
     "$gcp_path" \
     "$gcp_xray_path" \
     "$gcp_vmess_path" \
-    "$gcp_trojan_path")
+    "$gcp_trojan_path" \
+    "$gcp_ss_path")
 
   echo ""
   echo "=================================================="
